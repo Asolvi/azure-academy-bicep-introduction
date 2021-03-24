@@ -1,4 +1,4 @@
-#Bicep introduction
+# Bicep introduction
 
 The first few commits in this repository showcases how the Azure resources for a simple web app and a service bus can be set up using Bicep.
 
