@@ -1,9 +1,18 @@
+targetScope = 'subscription'
+
 param environment string
 param skuName string
 param skuTier string
 
-var location = 'westeurope'
+var location = deployment().location
 var resourceNamePrefix = 'bicep-playground-${environment}'
+
+resource rg 'Microsoft.Resources/resourceGroups@2020-10-01'= {
+  name: '${resourceNamePrefix}-rg'
+  location: location
+}
+
+var scope = resourceGroup(rg.name)
 
 module serviceBus 'modules/servicebus.bicep' = {
   name: 'serviceBus'
@@ -11,6 +20,7 @@ module serviceBus 'modules/servicebus.bicep' = {
     location: location
     resourceNamePrefix: resourceNamePrefix
   }
+  scope: scope
 }
 
 module webapp 'modules/webapp.bicep' = {
@@ -22,4 +32,5 @@ module webapp 'modules/webapp.bicep' = {
     skuTier: skuTier
     serviceBusEndpoint: serviceBus.outputs.serviceBusEndpoint
   }
+  scope: scope
 }
