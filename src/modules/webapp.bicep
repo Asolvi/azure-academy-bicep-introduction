@@ -3,6 +3,7 @@ param resourceNamePrefix string
 param skuTier string
 param skuName string
 param serviceBusEndpoint string
+param tags object
 
 resource serverFarm 'Microsoft.Web/serverfarms@2020-06-01' = {
   location: location
@@ -11,6 +12,7 @@ resource serverFarm 'Microsoft.Web/serverfarms@2020-06-01' = {
     tier: skuTier
     name: skuName
   }
+  tags: tags
 }
 
 resource webapp 'Microsoft.Web/sites@2020-06-01' = {
@@ -28,4 +30,5 @@ resource webapp 'Microsoft.Web/sites@2020-06-01' = {
       ]
     }
   }
+  tags: tags
 }
